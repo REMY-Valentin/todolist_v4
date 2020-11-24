@@ -1,5 +1,9 @@
 import React from 'react';
 import Task from './task/task';
+//import userData from '../index';
+
+
+
 
 class Main extends React.Component {
     constructor(props) {
@@ -34,7 +38,29 @@ class Main extends React.Component {
         this.setState({category: event.target.value});
     }
 
- 
+    componentDidMount() {
+        //go fetch info on the template
+        var userDataDiv = document.querySelector('.js-user-info');
+        var userData = [userDataDiv.dataset.id, userDataDiv.dataset.email];
+        console.log(userData)
+        //fetch data on the api side
+        console.log('fetch');
+        fetch('https://localhost:8000/api/'+userData[0])
+        .then(function(response) {
+            if (response.status !== 200) {
+                console.log('erreur fetch todos');
+                return;
+            }
+            response.json().then(function(data) {
+                console.log(data);
+            })
+        })
+        .catch(function(err) {
+            console.log(err);
+        })
+    }
+
+    
     render() {       
         const task = []
         for (let i = 0; i < this.state.numberOfTask; i++) {

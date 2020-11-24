@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- ... -->
+
+        {% block stylesheets %}
+            {# 'app' must match the first argument to addEntry() in webpack.config.js #}
+            {{ encore_entry_link_tags('index') }}
+
+            <!-- Renders a link tag (if your module requires any CSS)
+                 <link rel="stylesheet" href="/build/app.css"> -->
+                 <link rel="stylesheet" href="./styles/font-awesome.css" />
+                 <link rel="stylesheet" href="./styles/bulma.css" />
+                 <link rel="stylesheet" href="./styles/style.css" />
+        {% endblock %}
+    </head>
+    <body>
+        <!-- ... -->
+        <div id="root"></div>
+        <div class="js-user-info" data-id={{user.id}} data-email={{user.email}}></div>
+        {% block javascripts %}
+            {{ encore_entry_script_tags('index') }}
+            
+            
+            <!-- Renders app.js & a webpack runtime.js file
+                <script src="/build/runtime.js"></script>
+                <script src="/build/app.js"></script> -->
+        {% endblock %}
+    </body>
+</html>

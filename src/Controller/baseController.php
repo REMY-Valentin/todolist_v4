@@ -5,13 +5,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
+
 class baseController extends AbstractController
 {
     /**
-     * @Route("/")
+     * @Route("/", name="todo")
      */
     public function base() 
     {
-        return $this->render('base.html.twig');
+        $userEntity = $this->getUser();
+        $user = ['id'=> $userEntity->getId(), 'email' => $userEntity->getEmail()];
+        //dump($user);
+        return $this->render('todo.html.twig', ['user'=> $user ]);
     }
 }

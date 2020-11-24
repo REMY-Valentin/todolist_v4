@@ -65,6 +65,8 @@ class header extends React.Component {
             }
         }
     }
+
+    
     
     render() {
 
@@ -81,6 +83,9 @@ class header extends React.Component {
                     <a href="./">
                         <h1 className="title is-1">TodoList</h1>
                     </a>
+                </div>
+                <div>
+                    <a href="/logout" className="button">Logout</a>
                 </div>
                 <div className="filters-bar">
                     <div className="filters-bar__element buttons are-small has-addons">
