@@ -15,7 +15,8 @@ class Main extends React.Component {
             category: "",
             status: "",
             completion: "",
-            numberOfTask : 0
+            numberOfTask : 0,
+            userId:""
         };
 
         this.handleName = this.handleName.bind(this);
@@ -32,7 +33,7 @@ class Main extends React.Component {
             numberOfTask: this.state.numberOfTask + 1 
         });
         event.target.querySelector("input").value = ""
-        
+        this.sendTodo();
     }
 
     handleName(event) {
@@ -64,12 +65,30 @@ class Main extends React.Component {
         
     }
 
+    sendTodo() {
+        axios.post('https://localhost:8000/api/'+this.state.userId+'/add', {
+            name: this.state.name,
+            category: this.state.category,
+            status: this.state.status,
+            completion: this.state.completion
+        })
+        .then((res) => {
+            console.log(res)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    }
+
     componentDidMount() {
         //go fetch info on the template
         
         var userDataDiv = document.querySelector('.js-user-info');
         var userData = [userDataDiv.dataset.id, userDataDiv.dataset.email];
         this.loadTodo(userData[0])
+        this.setState({
+            userId: userData[0]
+        })
         
     }
 
