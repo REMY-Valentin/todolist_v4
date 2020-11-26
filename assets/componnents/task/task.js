@@ -12,7 +12,7 @@ class task extends React.Component {
             name : this.props.name,
             category : this.props.category,
             status : this.props.status,
-            completion: "0"
+            completion: this.props.completion
         };
         this.handler = this.handler.bind(this);
         this.changeCompletion = this.changeCompletion.bind(this);

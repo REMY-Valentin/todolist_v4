@@ -1,5 +1,6 @@
 import React from 'react';
 import Task from './task/task';
+import axios from 'axios';
 //import userData from '../index';
 
 
@@ -13,17 +14,21 @@ class Main extends React.Component {
             allCategory: this.props.category,
             category: "",
             status: "",
+            completion: "",
             numberOfTask : 0
         };
 
         this.handleName = this.handleName.bind(this);
         this.handleCategory = this.handleCategory.bind(this);
         this.add = this.add.bind(this);
+        this.loadTodo =this.loadTodo.bind(this);
     }
 
     add(event) {
         event.preventDefault();
         this.setState({
+            status: 'incomplete',
+            completion: '0',
             numberOfTask: this.state.numberOfTask + 1 
         });
         event.target.querySelector("input").value = ""
@@ -38,27 +43,37 @@ class Main extends React.Component {
         this.setState({category: event.target.value});
     }
 
+    async loadTodo(userData) {
+       
+        axios.get('https://localhost:8000/api/'+userData)
+        .then((res) => {
+            console.log(res.data.length)
+            for (let i = 0; i < res.data.length; i++) {
+                this.setState({
+                    name: res.data[i][1],
+                    category: res.data[i][2],
+                    status: res.data[i][3],
+                    completion: res.data[i][4],
+                    numberOfTask: this.state.numberOfTask + 1
+                })
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+        
+    }
+
     componentDidMount() {
         //go fetch info on the template
+        
         var userDataDiv = document.querySelector('.js-user-info');
         var userData = [userDataDiv.dataset.id, userDataDiv.dataset.email];
-        console.log(userData)
-        //fetch data on the api side
-        console.log('fetch');
-        fetch('https://localhost:8000/api/'+userData[0])
-        .then(function(response) {
-            if (response.status !== 200) {
-                console.log('erreur fetch todos');
-                return;
-            }
-            response.json().then(function(data) {
-                console.log(data);
-            })
-        })
-        .catch(function(err) {
-            console.log(err);
-        })
+        this.loadTodo(userData[0])
+        
     }
+
+    
 
     
     render() {       
@@ -68,7 +83,8 @@ class Main extends React.Component {
                 task.push(<li> <Task 
                     name= {this.state.name}
                     category={this.state.category}
-                    status= "incomplete"
+                    status= {this.state.status}
+                    completion= {this.state.completion}
                 /> </li>)
             }
         }
