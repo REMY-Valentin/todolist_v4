@@ -69,7 +69,6 @@ class header extends React.Component {
     
     
     render() {
-
         const category = []
         for (let i = 0; i < this.state.category.length; i++) {
             category.push(

@@ -1,10 +1,13 @@
 import React from 'react';
+import axios from 'axios';
 
 class button extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            status: 'incomplete'
+            status: this.props.status,
+            id: this.props.id,
+            userId: this.props.userId
         }
     }
 
@@ -18,6 +21,22 @@ class button extends React.Component {
         this.setState({
             status: status
         });
+    }
+
+    delete() {
+        //console.log('delete')
+        //remove server side
+        axios.post('https://localhost:8000/api/'+this.state.userId+'/delete', {
+            id: this.state.id,
+        })
+        .then((res) => {
+            console.log(res)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+        //remove client side TODO
+        
     }
 
     render() {
@@ -69,14 +88,14 @@ class button extends React.Component {
                             <i className="fa fa-undo"></i>
                         </span>
                     </button>
-                    <button onClick={() => this.dispacher("complete")} className="task__content__button__delete button is-danger is-small">
+                    <button onClick={() => this.delete()} className="task__content__button__delete button is-danger is-small">
                         <span className="icon is-small">
                             <i className="fa fa-trash"></i>
                         </span>
                     </button>
                 </div>
             );
-        } 
+        }
         
     }
 }

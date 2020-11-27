@@ -10,13 +10,14 @@ class Main extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: "",
             name: "",
-            allCategory: this.props.category,
             category: "",
             status: "",
             completion: "",
             numberOfTask : 0,
-            userId:""
+            userId:"",
+            allCategory: this.props.category
         };
 
         this.handleName = this.handleName.bind(this);
@@ -31,9 +32,9 @@ class Main extends React.Component {
             status: 'incomplete',
             completion: '0',
             numberOfTask: this.state.numberOfTask + 1 
-        });
+        }, this.sendTodo());
         event.target.querySelector("input").value = ""
-        this.sendTodo();
+        
     }
 
     handleName(event) {
@@ -48,9 +49,10 @@ class Main extends React.Component {
        
         axios.get('https://localhost:8000/api/'+userData)
         .then((res) => {
-            console.log(res.data.length)
+            //console.log(res.data.length)
             for (let i = 0; i < res.data.length; i++) {
                 this.setState({
+                    id: res.data[i][0],
                     name: res.data[i][1],
                     category: res.data[i][2],
                     status: res.data[i][3],
@@ -73,7 +75,8 @@ class Main extends React.Component {
             completion: this.state.completion
         })
         .then((res) => {
-            console.log(res)
+            console.log(res.data)
+            this.setState({id: res.data})
         })
         .catch((err) => {
             console.log(err)
@@ -87,7 +90,7 @@ class Main extends React.Component {
         var userData = [userDataDiv.dataset.id, userDataDiv.dataset.email];
         this.loadTodo(userData[0])
         this.setState({
-            userId: userData[0]
+            userId: userData[0],
         })
         
     }
@@ -99,18 +102,20 @@ class Main extends React.Component {
         const task = []
         for (let i = 0; i < this.state.numberOfTask; i++) {
             if(!this.state.numberOfTask !== 0) {
-                task.push(<li> <Task 
+                task.push(<li key={i}> <Task 
+                    id= {this.state.id}
                     name= {this.state.name}
                     category={this.state.category}
                     status= {this.state.status}
                     completion= {this.state.completion}
+                    userId= {this.state.userId}
                 /> </li>)
             }
         }
 
         const category = []
         for (let i = 0; i < this.state.allCategory.length; i++) {
-            category.push(
+            category.push(i =>
                 <option value = {this.state.allCategory[i]}> {this.state.allCategory[i]} </option>
             )
         }

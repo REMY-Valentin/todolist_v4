@@ -3,32 +3,38 @@ import Name from './task_components/task_name';
 import Category from './task_components/task_category';
 import Button from './task_components/task_button';
 import ProgressBar from './task_components/progress_bar';
+import axios from 'axios';
 
 
 class task extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            id : this.props.id,
             name : this.props.name,
             category : this.props.category,
             status : this.props.status,
-            completion: this.props.completion
+            completion: this.props.completion,
+            userId: this.props.userId
         };
         this.handler = this.handler.bind(this);
         this.changeCompletion = this.changeCompletion.bind(this);
+        this.updateTodo = this.updateTodo.bind(this);
     }
 
     handler(state) {       
+        console.log(state)
         this.setState({status: state}, () => this.progress()) 
     }
 
     progress() {
         //console.log(this.state)
         if(this.state.status === "complete") {
-            this.setState({ completion: "100"})
+            this.setState({ completion: "100"}, () => this.updateTodo())
         } else {
-           this.setState({ completion: this.state.completion })
+           this.setState({ completion: this.state.completion }, () => this.updateTodo())
         }
+        
     }
 
     changeCompletion(evt) {
@@ -43,8 +49,25 @@ class task extends React.Component {
         var borderLeft = (sizeBrowzer - sizeTodo) / 2
         var zeroTodo = clickSizeBrowzer - borderLeft
         var percent = ((zeroTodo/sizeTodo)*100)
-        this.setState({ completion:(Math.round(percent)) })
-    
+        this.setState({ completion: Math.round(percent).toString() }, () => this.updateTodo());
+        
+    }
+
+    updateTodo() {
+        //console.log('update')
+        axios.post('https://localhost:8000/api/'+this.state.userId+'/update', {
+            id: this.state.id,
+            name: this.state.name,
+            category: this.state.category,
+            status: this.state.status,
+            completion: this.state.completion
+        })
+        .then((res) => {
+            console.log(res)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
     }
     
     render() {
@@ -55,7 +78,7 @@ class task extends React.Component {
                 <div className="task__content">
                     <Name value={this.state.name} />
                     <Category value={this.state.category} />
-                    <Button handler={handler.bind(this)} />
+                    <Button handler={handler.bind(this)} id={this.state.id} userId={this.state.userId} status={this.state.status}/>
                 </div>
                 <div /*onMouseMoveCapture={this.changeCompletion}*/ onClick={this.changeCompletion} className="progress-bar">
                     <ProgressBar completion={this.state.completion}/>
