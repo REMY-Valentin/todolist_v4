@@ -8,7 +8,7 @@ class header extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            category: this.props.category,
+            category: [],
             filter: "Toutes"
         }
     }
@@ -66,13 +66,25 @@ class header extends React.Component {
         }
     }
 
+    deleteCat() {
+        
+    }
+
+    componentDidMount() {
+        //console.log("mount header")
+    }
+
     
+
+    componentDidUpdate() {
+        //console.log("update header")  
+    }
     
     render() {
         const category = []
-        for (let i = 0; i < this.state.category.length; i++) {
+        for (let i = 0; i < this.props.allCategory.length; i++) {
             category.push(
-                <option value = {this.state.category[i]}> {this.state.category[i]} </option>
+                <option value = {this.props.allCategory[i]}> {this.props.allCategory[i]} <a onClick={this.deleteCat}><i class="fa fa-trash-o" aria-hidden="true"></i></a> </option>
             )
         }
 

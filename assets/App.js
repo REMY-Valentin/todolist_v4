@@ -8,7 +8,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      category: [],
+      allCategory: [],
       userId: ""
     };
     this.addCategory = this.addCategory.bind(this);
@@ -17,17 +17,19 @@ class App extends React.Component {
 
   addCategory(evt) {
     evt.preventDefault()
-    let category = this.state.category
-    if (evt.target.category.value !== "") {
-      category.push(evt.target.category.value)
-      this.setState({
-        category: category
-      }, () => this.sendCategory(evt.target.category.value));
+    var data = evt.target.category.value
+    if (data !== "") {
+      //console.log(evt.target.category.value)
+      
+      this.setState(prevState => ({
+        allCategory: [...prevState.allCategory, data]
+      }), () => this.sendCategory(data), );
+      
     }
   }
 
   sendCategory(category) {
-    axios.post('https://localhost:8000/api/'+this.state.userId+'/add', {
+    axios.post('https://localhost:8000/api/category/'+this.state.userId+'/add', {
         name: category
     })
     .then((res) => {
@@ -38,39 +40,42 @@ class App extends React.Component {
     })
   }
 
-  async loadCategory(userData) {
+  loadCategory(userData) {
 
     axios.get('https://localhost:8000/api/category/'+userData)
     .then((res) => {
-        console.log(res.data)
-        for (let i = 0; i < res.data.length; i++) {
-            this.setState(prevState => ({
-                category: [...prevState.category, res.data[i]]
-            }))
-        }
+        //console.log(res.data)
+        this.setState({allCategory: res.data})
+        
     })
     .catch((err) => {
         console.log(err)
     })
   }
 
+  
+
   componentDidMount() {
     //go fetch info on the template
     
     var userDataDiv = document.querySelector('.js-user-info');
     var userData = [userDataDiv.dataset.id, userDataDiv.dataset.email];
-    this.loadCategory(userData[0])
+    
     this.setState({
         userId: userData[0]
-    })
+    },() => this.loadCategory(this.state.userId))
     
-}
+  }
+
+  componentDidUpdate() {
+    //console.log('update app');
+  }
 
   render() {
     return (
       <div className="container"> 
-        <Header category = {this.state.category} />
-        <Main category = {this.state.category} />
+        <Header allCategory = {this.state.allCategory} />
+        <Main allCategory = {this.state.allCategory} userId = {this.state.userId}/>
         <div className="addCategory">
           <form onSubmit={this.addCategory} name="addCategory">
             <input type="text" className="input" name="category" placeholder="Catégorie"/>

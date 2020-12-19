@@ -31,10 +31,18 @@ class task extends React.Component {
         //console.log(this.state)
         if(this.state.status === "complete") {
             this.setState({ completion: "100"}, () => this.updateTodo())
-        } else {
+        } else if( this.state.status === "delete") {
+            console.log('delete progress')
+            this.delete();
+        } 
+        else {
            this.setState({ completion: this.state.completion }, () => this.updateTodo())
         }
         
+    }
+
+    delete() {
+        console.log('delte')
     }
 
     changeCompletion(evt) {
@@ -69,7 +77,14 @@ class task extends React.Component {
             console.log(err)
         })
     }
+
+    componentDidUpdate() {
+        //console.log('update task');
+    }
     
+    componentDidMount() {
+        
+    }
     render() {
         var handler = this.handler;
         var classTodo = this.state.status + ' task'

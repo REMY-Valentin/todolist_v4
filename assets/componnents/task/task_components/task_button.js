@@ -31,6 +31,7 @@ class button extends React.Component {
         })
         .then((res) => {
             console.log(res)
+            this.dispacher("delete", this.state.id)
         })
         .catch((err) => {
             console.log(err)
@@ -45,12 +46,12 @@ class button extends React.Component {
                 <div className="task__content__buttons">
                     <button onClick={() => this.dispacher('complete')} className="task__content__button__validate button is-success is-small">
                         <span className="icon is-small">
-                            <i className="fa fa-check-square-o"></i>
+                            <i class="far fa-check-square"></i>
                         </span>
                     </button>
                     <button onClick={() => this.changeStatus("modify")} className="task__content__button__modify button is-warning is-small">
                         <span className="icon is-small">
-                            <i className="fa fa-pencil-square-o"></i>
+                            <i class="far fa-edit"></i>
                         </span>
                     </button>
                     <button onClick={() => this.dispacher("archive")} className="task__content__button__archive button is-danger is-small">
@@ -65,12 +66,12 @@ class button extends React.Component {
                 <div className="task__content__buttons">
                     <button onClick={() => this.dispacher("incomplete")} className="task__content__button__incomplete button is-success is-small">
                         <span className="icon is-small">
-                            <i className="fa fa-step-backward"></i>
+                            <i class="fas fa-undo"></i>
                         </span>
                     </button>
                     <button onClick={() => this.changeStatus("")} className="task__content__button__modify button is-warning is-small">
                         <span className="icon is-small">
-                            <i className="fa fa-pencil-square-o"></i>
+                            <i class="far fa-edit"></i>
                         </span>
                     </button>
                     <button onClick={() => this.dispacher("archive")} className="task__content__button__archive button is-danger is-small">
@@ -85,16 +86,18 @@ class button extends React.Component {
                 <div className="task__content__buttons">
                     <button onClick={() => this.dispacher("complete")} className="task__content__button__desarchive button is-success is-small">
                         <span className="icon is-small">
-                            <i className="fa fa-undo"></i>
+                            <i class="fas fa-undo"></i>
                         </span>
                     </button>
                     <button onClick={() => this.delete()} className="task__content__button__delete button is-danger is-small">
                         <span className="icon is-small">
-                            <i className="fa fa-trash"></i>
+                            <i class="fas fa-trash"></i>
                         </span>
                     </button>
                 </div>
             );
+        }else {
+            <p>No todos</p>
         }
         
     }

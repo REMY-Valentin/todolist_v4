@@ -16,8 +16,7 @@ class Main extends React.Component {
             status: "",
             completion: "",
             numberOfTask : 0,
-            userId:"",
-            allCategory: this.props.category
+            userId: this.props.userId
         };
 
         this.handleName = this.handleName.bind(this);
@@ -28,11 +27,7 @@ class Main extends React.Component {
 
     add(event) {
         event.preventDefault();
-        this.setState({
-            status: 'incomplete',
-            completion: '0',
-            numberOfTask: this.state.numberOfTask + 1 
-        }, this.sendTodo());
+        this.sendTodo();
         event.target.querySelector("input").value = ""
         
     }
@@ -45,9 +40,9 @@ class Main extends React.Component {
         this.setState({category: event.target.value});
     }
 
-    async loadTodo(userData) {
+    loadTodo(userId) {
        
-        axios.get('https://localhost:8000/api/'+userData)
+        axios.get('https://localhost:8000/api/'+userId)
         .then((res) => {
             //console.log(res.data.length)
             for (let i = 0; i < res.data.length; i++) {
@@ -76,7 +71,12 @@ class Main extends React.Component {
         })
         .then((res) => {
             console.log(res.data)
-            this.setState({id: res.data})
+            this.setState({
+                id: res.data,
+                status: 'incomplete',
+                completion: '0',
+                numberOfTask: this.state.numberOfTask + 1 ,
+            })
         })
         .catch((err) => {
             console.log(err)
@@ -85,16 +85,19 @@ class Main extends React.Component {
 
     componentDidMount() {
         //go fetch info on the template
+        //console.log('mount main')
         
         var userDataDiv = document.querySelector('.js-user-info');
         var userData = [userDataDiv.dataset.id, userDataDiv.dataset.email];
-        this.loadTodo(userData[0])
+        
         this.setState({
             userId: userData[0],
-        })
-        
+        }, () => this.loadTodo(this.state.userId))
     }
 
+    componentDidUpdate() {
+        //console.log('update main')
+    }
     
 
     
@@ -112,13 +115,13 @@ class Main extends React.Component {
                 /> </li>)
             }
         }
-
         const category = []
-        for (let i = 0; i < this.state.allCategory.length; i++) {
-            category.push(i =>
-                <option value = {this.state.allCategory[i]}> {this.state.allCategory[i]} </option>
-            )
+        for (let i = 0; i < this.props.allCategory.length; i++) {
+        category.push(
+            <option value = {this.props.allCategory[i]}> {this.props.allCategory[i]} </option>
+        )
         }
+            
         
 
         return (
@@ -126,6 +129,7 @@ class Main extends React.Component {
                 <ul>
                     {task}
                 </ul>
+                
                 <div className="task task--add">
                     <form onSubmit={this.add}>
                         <div className="task__content">

@@ -2,15 +2,15 @@
 <html>
     <head>
         <!-- ... -->
-
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         {% block stylesheets %}
             {# 'app' must match the first argument to addEntry() in webpack.config.js #}
             {{ encore_entry_link_tags('index') }}
 
             <!-- Renders a link tag (if your module requires any CSS)
                  <link rel="stylesheet" href="/build/app.css"> -->
-                 <link rel="stylesheet" href="./styles/font-awesome.css" />
-                 <link rel="stylesheet" href="./styles/bulma.css" />
+                 <link rel="stylesheet" href="./Fork-Awesome-1.1.7/css/fork-awesome.min.css" />
+                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
                  <link rel="stylesheet" href="./styles/style.css" />
         {% endblock %}
     </head>
@@ -20,7 +20,7 @@
         <div class="js-user-info" data-id={{user.id}} data-email={{user.email}}></div>
         {% block javascripts %}
             {{ encore_entry_script_tags('index') }}
-            
+            <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
             
             <!-- Renders app.js & a webpack runtime.js file
                 <script src="/build/runtime.js"></script>
