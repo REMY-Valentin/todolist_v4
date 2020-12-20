@@ -18,13 +18,32 @@ class task extends React.Component {
             userId: this.props.userId
         };
         this.handler = this.handler.bind(this);
+        this.nameHandler = this.nameHandler.bind(this);
         this.changeCompletion = this.changeCompletion.bind(this);
         this.updateTodo = this.updateTodo.bind(this);
     }
 
-    handler(state) {       
-        console.log(state)
-        this.setState({status: state}, () => this.progress()) 
+    handler(state, id) {       
+        //console.log(state)
+        if (state !== 'modify') {
+            this.setState({status: state}, () => this.progress()) 
+        } else {
+            this.modifyTodo(id)
+        }
+    }
+
+    nameHandler(evt) {
+        //console.log(evt)
+        if(evt.type === 'change') {
+            this.setState({name: evt.target.value})
+        } else {
+            //make the change in the dom
+            let newValue = evt.target.value
+            evt.target.style.display = 'none'
+            let p = evt.target.nextElementSibling
+            p.style.display = 'block'
+            this.updateTodo();
+        }
     }
 
     progress() {
@@ -32,17 +51,31 @@ class task extends React.Component {
         if(this.state.status === "complete") {
             this.setState({ completion: "100"}, () => this.updateTodo())
         } else if( this.state.status === "delete") {
-            console.log('delete progress')
+            //console.log('delete progress')
             this.delete();
-        } 
-        else {
+        } else {
            this.setState({ completion: this.state.completion }, () => this.updateTodo())
         }
         
     }
 
+    modifyTodo(id) {
+        //console.log('modify', id);
+        let todos = document.querySelectorAll(".task")
+        for (let i = 0; i < todos.length; i++) {
+            if (todos[i].dataset.todo == id) {
+                var todo = todos[i]
+            }
+        }
+        //let name = todo.querySelector(".task__content__name input")
+        todo.classList.add('task--edit')
+        todo.querySelector("p").style.display = 'none'
+        
+    }
+
     delete() {
         console.log('delte')
+        this.setState({status: 'deleted--task'})
     }
 
     changeCompletion(evt) {
@@ -87,11 +120,12 @@ class task extends React.Component {
     }
     render() {
         var handler = this.handler;
+        var nameHandler = this.nameHandler;
         var classTodo = this.state.status + ' task'
         return(
-            <div className={classTodo} data-category="">
+            <div className={classTodo} data-todo={this.state.id}>
                 <div className="task__content">
-                    <Name value={this.state.name} />
+                    <Name nameHandler={nameHandler.bind(this)} value={this.state.name} />
                     <Category value={this.state.category} />
                     <Button handler={handler.bind(this)} id={this.state.id} userId={this.state.userId} status={this.state.status}/>
                 </div>

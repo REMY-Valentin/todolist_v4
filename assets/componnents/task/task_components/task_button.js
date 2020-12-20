@@ -5,7 +5,7 @@ class button extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            status: this.props.status,
+            currentStatus: "",
             id: this.props.id,
             userId: this.props.userId
         }
@@ -13,13 +13,15 @@ class button extends React.Component {
 
     dispacher(status) {
         var handler = this.props.handler;
-        handler(status)
-        this.changeStatus(status)
+        handler(status, this.state.id)
+        if (status !== 'modify' && status !== 'delete') {
+            this.changeStatus(status)
+        }
     }
 
     changeStatus(status) {
         this.setState({
-            status: status
+            currentStatus: status
         });
     }
 
@@ -40,18 +42,27 @@ class button extends React.Component {
         
     }
 
+    componentDidUpdate() {
+    
+    }
+    
+    componentDidMount() {
+        
+    }
+
     render() {
-        if (this.state.status === "incomplete") {
+        
+        if (this.props.status === "incomplete") {
             return(
                 <div className="task__content__buttons">
                     <button onClick={() => this.dispacher('complete')} className="task__content__button__validate button is-success is-small">
                         <span className="icon is-small">
-                            <i class="far fa-check-square"></i>
+                            <i class="fa fa-check" aria-hidden="true"></i>
                         </span>
                     </button>
-                    <button onClick={() => this.changeStatus("modify")} className="task__content__button__modify button is-warning is-small">
+                    <button onClick={() => this.dispacher("modify")} className="task__content__button__modify button is-warning is-small">
                         <span className="icon is-small">
-                            <i class="far fa-edit"></i>
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                         </span>
                     </button>
                     <button onClick={() => this.dispacher("archive")} className="task__content__button__archive button is-danger is-small">
@@ -61,17 +72,17 @@ class button extends React.Component {
                     </button>
                 </div>
             )
-        } else if (this.state.status === "complete") {
+        } else if (this.props.status === "complete") {
             return(
                 <div className="task__content__buttons">
                     <button onClick={() => this.dispacher("incomplete")} className="task__content__button__incomplete button is-success is-small">
                         <span className="icon is-small">
-                            <i class="fas fa-undo"></i>
+                            <i class="fa fa-reply" aria-hidden="true"></i>
                         </span>
                     </button>
-                    <button onClick={() => this.changeStatus("")} className="task__content__button__modify button is-warning is-small">
+                    <button onClick={() => this.dispacher("modify")} className="task__content__button__modify button is-warning is-small">
                         <span className="icon is-small">
-                            <i class="far fa-edit"></i>
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                         </span>
                     </button>
                     <button onClick={() => this.dispacher("archive")} className="task__content__button__archive button is-danger is-small">
@@ -81,24 +92,27 @@ class button extends React.Component {
                     </button>
                 </div>
             );
-        }else if (this.state.status === "archive") {
+        }else if (this.props.status === "archive") {
             return(
                 <div className="task__content__buttons">
                     <button onClick={() => this.dispacher("complete")} className="task__content__button__desarchive button is-success is-small">
                         <span className="icon is-small">
-                            <i class="fas fa-undo"></i>
+                            <i class="fa fa-reply" aria-hidden="true"></i>
                         </span>
                     </button>
                     <button onClick={() => this.delete()} className="task__content__button__delete button is-danger is-small">
                         <span className="icon is-small">
-                            <i class="fas fa-trash"></i>
+                            <i class="fa fa-trash" aria-hidden="true"></i>
                         </span>
                     </button>
                 </div>
             );
         }else {
-            <p>No todos</p>
+            return(
+                <p>Problemos !</p>
+            )
         }
+        
         
     }
 }

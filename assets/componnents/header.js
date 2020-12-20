@@ -66,9 +66,7 @@ class header extends React.Component {
         }
     }
 
-    deleteCat() {
-        
-    }
+    
 
     componentDidMount() {
         //console.log("mount header")
@@ -84,7 +82,7 @@ class header extends React.Component {
         const category = []
         for (let i = 0; i < this.props.allCategory.length; i++) {
             category.push(
-                <option value = {this.props.allCategory[i]}> {this.props.allCategory[i]} <a onClick={this.deleteCat}><i class="fa fa-trash-o" aria-hidden="true"></i></a> </option>
+                <option value = {this.props.allCategory[i]}> {this.props.allCategory[i]}</option>
             )
         }
 
@@ -95,7 +93,7 @@ class header extends React.Component {
                         <h1 className="title is-1">TodoList</h1>
                     </a>
                 </div>
-                <div>
+                <div className="logout">
                     <a href="/logout" className="button">Logout</a>
                 </div>
                 <div className="filters-bar">
