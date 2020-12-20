@@ -2,29 +2,72 @@
 
 {% block title %}Login{% endblock %}
 
+{% block head %}
+    <link type="text/css" rel="stylesheet" href="{{ asset('styles/style.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ asset('styles/style_login.css') }}" />
+{% endblock %}
 
 {% block body %}
+
+<div class="header">
+    <div class="logo">
+        <a href="./">
+            <h1 class="title is-1">TodoList</h1>
+        </a>
+    </div>
+    <div class="logout">
+        <a href="{{path('app_register')}}" class="button">Register</a>
+    </div>
+</div>
+
+
 <form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+    
 
     {% if app.user %}
         <div class="mb-3">
             You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
         </div>
     {% endif %}
+    
+    {# <label for="inputPassword">Password</label>
+    <input type="password" name="password" id="inputPassword" class="form-control" required> #}
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" required>
+    
+
+    <div class="field">
+        <p class="control has-icons-left has-icons-right">
+            {# <input class="input" type="email" placeholder="Email"> #}
+            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control input" placeholder="Email" required autofocus>
+            <span class="icon is-small is-left">
+            <i class="fa fa-envelope" aria-hidden="true"></i>
+            </span>
+        </p>
+    </div>
+    <div class="field">
+        <p class="control has-icons-left">
+            {# <input class="input" type="password" placeholder="Password"> #}
+            <input type="password" name="password" id="inputPassword" class="form-control input" placeholder="Password" required>
+            <span class="icon is-small is-left">
+            <i class="fa fa-lock" aria-hidden="true"></i>
+            </span>
+        </p>
+        </div>
+        <div class="field">
+        <p class="control">
+            <button class="button is-success" type="submit">
+            Login
+            </button>
+        </p>
+    </div>
 
     <input type="hidden" name="_csrf_token"
            value="{{ csrf_token('authenticate') }}"
     >
 
+    {% if error %}
+        <div class="tag is-danger is-light is-large">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
     {#
         Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
         See https://symfony.com/doc/current/security/remember_me.html
@@ -36,8 +79,8 @@
         </div>
     #}
 
-    <button class="btn btn-lg btn-primary" type="submit">
+    {# <button class="btn btn-lg btn-primary" type="submit">
         Sign in
-    </button>
+    </button> #}
 </form>
 {% endblock %}

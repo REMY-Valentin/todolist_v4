@@ -1,21 +1,79 @@
 {% extends 'base.html.twig' %}
 
+{% block head %}
+    <link type="text/css" rel="stylesheet" href="{{ asset('styles/style.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ asset('styles/style_register.css') }}" />
+{% endblock %}
+
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    {% for flashError in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
-    {% endfor %}
+    
 
-    <h1>Register</h1>
+    <div class="header">
+        <div class="logo">
+            <a href="./">
+                <h1 class="title is-1">TodoList</h1>
+            </a>
+        </div>
+        <div class="logout">
+            <a href="{{path('app_login')}}" class="button">Login</a>
+        </div>
+    </div>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+    
+    {{ form_start(registrationForm) }} 
+        {# {{ form_row(registrationForm.email) }} #}
+        <div class="field">
+            <label class="label">Email</label>
+            <div class="control has-icons-left">
+                {# <input class="input" type="email" placeholder="Email" name="email" id="email"> #}
+                {{ form_widget(registrationForm.email, {'attr': {'class': 'input', 'placeholder' : 'Email'}}) }}
+                <span class="icon is-small is-left">
+                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                </span>
+            </div>
+        </div>
 
-        <button type="submit" class="btn">Register</button>
+        {# {{ form_row(registrationForm.plainPassword) }} #}
+
+        <div class="field">
+            <label class="label">Password</label>
+            <div class="control has-icons-left">
+                {# <input class="input is-danger" type="password" placeholder="Password" name="password" id="inputPassword"> #}
+                {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'input', 'placeholder' : 'Password'}}) }}
+                <span class="icon is-small is-left">
+                    <i class="fa fa-lock" aria-hidden="true"></i>
+                </span>
+            </div>
+        </div>
+
+        {# {{ form_row(registrationForm.agreeTerms) }} #}
+        <div class="field">
+            <div class="control">
+                <label class="checkbox">
+                {# <input type="checkbox"> #}
+                {{ form_widget(registrationForm.agreeTerms) }}
+                I agree to the <a href="#">terms and conditions</a>
+                </label>
+            </div>
+        </div>
+
+
+        <div class="field">
+            <div class="control">
+                <button type="submit" class="btn button is-link">Register</button>
+            </div>
+        </div>
+
+        {% for flashError in app.flashes('error') %}
+            <div class="tag is-danger is-light is-large" role="alert">{{ flashError }}</div>
+        {% endfor %}
     {{ form_end(registrationForm) }}
+    
+
+    {# {% if app.flashes('error') %}
+        <div class="tag is-danger is-light is-large">{{  app.flashes('error') }}</div>
+    {% endif %} #}
+
 {% endblock %}
