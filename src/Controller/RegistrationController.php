@@ -45,10 +45,12 @@ class RegistrationController extends AbstractController
                 $authenticator,
                 'main'
             );
-        } else {
+        } else if ($form->isSubmitted() && !$form->isValid()) {
+            $error = $form->getErrors(true)->__toString();
+            $error = str_replace("ERROR: ", "",$error);
             $this->addFlash(
                 'error',
-                'Erreur dans le formulaire'
+                $error
             );
         }
         
