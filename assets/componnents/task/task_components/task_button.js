@@ -57,17 +57,17 @@ class button extends React.Component {
                 <div className="task__content__buttons">
                     <button onClick={() => this.dispacher('complete')} className="task__content__button__validate button is-success is-small">
                         <span className="icon is-small">
-                            <i class="fa fa-check" aria-hidden="true"></i>
+                            <i className="fa fa-check" aria-hidden="true"></i>
                         </span>
                     </button>
                     <button onClick={() => this.dispacher("modify")} className="task__content__button__modify button is-warning is-small">
                         <span className="icon is-small">
-                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                            <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
                         </span>
                     </button>
                     <button onClick={() => this.dispacher("archive")} className="task__content__button__archive button is-danger is-small">
                         <span className="icon is-small">
-                            <i className="fa fa-archive"></i>
+                            <i className="fa fa-archive" aria-hidden="true"></i>
                         </span>
                     </button>
                 </div>
@@ -77,17 +77,17 @@ class button extends React.Component {
                 <div className="task__content__buttons">
                     <button onClick={() => this.dispacher("incomplete")} className="task__content__button__incomplete button is-success is-small">
                         <span className="icon is-small">
-                            <i class="fa fa-reply" aria-hidden="true"></i>
+                            <i className="fa fa-reply" aria-hidden="true"></i>
                         </span>
                     </button>
                     <button onClick={() => this.dispacher("modify")} className="task__content__button__modify button is-warning is-small">
                         <span className="icon is-small">
-                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                            <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
                         </span>
                     </button>
                     <button onClick={() => this.dispacher("archive")} className="task__content__button__archive button is-danger is-small">
                         <span className="icon is-small">
-                            <i className="fa fa-archive"></i>
+                            <i className="fa fa-archive" aria-hidden="true"></i>
                         </span>
                     </button>
                 </div>
@@ -97,12 +97,12 @@ class button extends React.Component {
                 <div className="task__content__buttons">
                     <button onClick={() => this.dispacher("complete")} className="task__content__button__desarchive button is-success is-small">
                         <span className="icon is-small">
-                            <i class="fa fa-reply" aria-hidden="true"></i>
+                            <i className="fa fa-reply" aria-hidden="true"></i>
                         </span>
                     </button>
                     <button onClick={() => this.delete()} className="task__content__button__delete button is-danger is-small">
                         <span className="icon is-small">
-                            <i class="fa fa-trash" aria-hidden="true"></i>
+                            <i className="fa fa-trash" aria-hidden="true"></i>
                         </span>
                     </button>
                 </div>

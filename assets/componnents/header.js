@@ -82,7 +82,7 @@ class header extends React.Component {
         const category = []
         for (let i = 0; i < this.props.allCategory.length; i++) {
             category.push(
-                <option value = {this.props.allCategory[i]}> {this.props.allCategory[i]}</option>
+                <option key={i} value = {this.props.allCategory[i]}> {this.props.allCategory[i]}</option>
             )
         }
 

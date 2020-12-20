@@ -27,7 +27,11 @@ class Main extends React.Component {
 
     add(event) {
         event.preventDefault();
-        this.sendTodo();
+        this.setState({
+            status: 'incomplete',
+            completion: '0'
+        }, () => this.sendTodo());
+        
         event.target.querySelector("input").value = ""
         
     }
@@ -70,7 +74,7 @@ class Main extends React.Component {
             completion: this.state.completion
         })
         .then((res) => {
-            console.log(res.data)
+            //console.log(res.data)
             this.setState({
                 id: res.data,
                 status: 'incomplete',
@@ -118,7 +122,7 @@ class Main extends React.Component {
         const category = []
         for (let i = 0; i < this.props.allCategory.length; i++) {
         category.push(
-            <option value = {this.props.allCategory[i]}> {this.props.allCategory[i]} </option>
+            <option key={i} value = {this.props.allCategory[i]}> {this.props.allCategory[i]} </option>
         )
         }
             
