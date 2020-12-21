@@ -253,11 +253,29 @@
   width: 100%;
   border: #3298dc solid 1px;
   border-top: unset;
+  display: flex;
+}
+
+.addCategory .dropdown {
+  padding-right: 2em;
+}
+
+.addCategory .dropdown-menu {
+  border: #3298DC solid 1px;
+  background-color: #EDEDED;
+  border-top: transparent;
+}
+
+.addCategory .dropdown-item {
+  border-bottom: thin #3298DC solid;
+  display: flex;
+  justify-content: space-between;
 }
 
 .addCategory form {
   display: flex;
   justify-content: flex-end;
+  flex-grow: 2;
 }
 
 .addCategory input {

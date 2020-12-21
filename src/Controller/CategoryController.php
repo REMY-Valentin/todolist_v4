@@ -55,6 +55,20 @@ class CategoryController extends AbstractController
     }
 
     /**
+     * @Route("/{id}/update", name="update-category")
+     */
+    public function update(int $id, User $user, Request $request, SerializerInterface $serializer, EntityManagerInterface $em, ValidatorInterface $validator): Response
+    {
+        $data = json_decode($request->getContent());
+        $category = $user->getCategories()->get($data->id);
+        // dd($data, $categoryId);
+        $user->removeCategory($category);
+        $em->flush();
+        
+        return $this->json(200);
+    }
+
+    /**
      * @Route("/{id}/delete", name="delete-category")
      */
     public function delete(int $id, Request $request, EntityManagerInterface $em)

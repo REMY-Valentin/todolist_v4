@@ -11,3 +11,11 @@ form .field {
     width: 90%;
     text-align: center;
 }
+
+.form-check {
+    display: inline-block;
+}
+
+.checkbox a {
+    display: inline-block;
+}
