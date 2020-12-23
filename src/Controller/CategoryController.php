@@ -48,6 +48,7 @@ class CategoryController extends AbstractController
         if (count($error) > 0) {
             return $this->json($error, 400);
         }
+        //dd($error);
         $em->persist($category);
         $em->flush();
 

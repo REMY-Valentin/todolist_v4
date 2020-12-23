@@ -10,7 +10,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       allCategory: [],
-      userId: ""
+      userId: "",
+      error: false
     };
     this.addCategory = this.addCategory.bind(this);
     this.loadCategory = this.loadCategory.bind(this);
@@ -21,14 +22,9 @@ class App extends React.Component {
     evt.preventDefault()
     var data = evt.target.category.value
     if (data !== "") {
-      //console.log(evt.target.category.value)
-      
-      this.setState(prevState => ({
-        allCategory: [...prevState.allCategory, data]
-      }), () => this.sendCategory(data));
-      
+      let res = this.sendCategory(data)
     }
-    console.log(evt.querySelector('input'))
+    //console.log(evt.querySelector('input'))
     
   }
 
@@ -37,11 +33,29 @@ class App extends React.Component {
         name: category
     })
     .then((res) => {
-        console.log(res.data)
+        //console.log(res.data)
+        this.setState(prevState => ({
+          allCategory: [...prevState.allCategory, category],
+          error: false
+        }));
+        return this.errorCategory(0)
     })
     .catch((err) => {
-        console.log(err)
+        //console.log(err)
+        this.setState({
+          error: true
+        })
+        return this.errorCategory(1)
     })
+  }
+
+  errorCategory(status) {
+    let input = document.querySelector('.addCategory input')
+    if (status === 1 ) {
+      input.style.border = 'red solid 2px'
+    } else {
+      input.style.border = ''
+    }
   }
 
   loadCategory(userData) {
@@ -118,7 +132,10 @@ class App extends React.Component {
         <Main allCategory = {this.state.allCategory} userId = {this.state.userId}/>
         <div className="addCategory">
           <form onSubmit={this.addCategory} name="addCategory">
-            <input type="text" className="input" name="category" placeholder="Catégorie"/>
+            <div className="addCategory--input">
+              <input type="text" className="input" name="category" placeholder="Catégorie"/>
+              { this.state.error ? <span className="tag is-danger errors">Category too long !</span> : null}
+            </div>
             <button className="task__content__button__add button is-info"><i className="fa fa-plus"></i>Ajouter</button>
           </form>
           
