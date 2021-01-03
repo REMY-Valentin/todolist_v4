@@ -74,7 +74,7 @@ class task extends React.Component {
     }
 
     delete() {
-        console.log('delte')
+        //console.log('delte')
         this.setState({status: 'deleted--task'})
     }
 
@@ -104,7 +104,7 @@ class task extends React.Component {
             completion: this.state.completion
         })
         .then((res) => {
-            console.log(res)
+            //console.log(res)
         })
         .catch((err) => {
             console.log(err)

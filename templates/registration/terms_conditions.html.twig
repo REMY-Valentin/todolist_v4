@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block head %}
+    <link type="text/css" rel="stylesheet" href="{{ asset('styles/style.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ asset('styles/style_terms_conditions.css') }}" />
+{% endblock %}
+
+{% block title %}Terms and conditions{% endblock %}
+
+{% block body %}
+
+<div class="header">
+    <div class="logo">
+        <a href="./">
+            <h1 class="title is-1">TodoList</h1>
+        </a>
+    </div>
+    <div class="logout">
+        <a href="{{path('app_login')}}" class="button">Login</a>
+    </div>
+    <div class="register">
+        <a href="{{path('app_register')}}" class="button">Register</a>
+    </div>
+</div>
+
+<div id='container'>
+    <div class='term'>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe consectetur magnam voluptatum blanditiis exercitationem cum delectus natus aut nisi deleniti laborum vel ipsum atque, necessitatibus suscipit ipsam eum? Libero, necessitatibus?
+        </p>
+        <p>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veritatis nobis cum quia voluptatum voluptates distinctio animi aut accusantium voluptatem. Vitae voluptate amet odit consectetur unde neque! Officiis dicta quae ut?
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente, ullam? Corrupti maxime cupiditate dolorem excepturi omnis! Dicta, quae corporis? Iure, debitis. Ipsa tempore aperiam ullam recusandae accusantium impedit sint ab.
+        </p>
+    </div>
+</div>
+
+{% endblock %}

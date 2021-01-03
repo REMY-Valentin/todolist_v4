@@ -58,4 +58,12 @@ class RegistrationController extends AbstractController
             'registrationForm' => $form->createView()
         ]);
     }
+
+    /**
+     * @Route("/Terms&Conditions", name="terms_conditions")
+     */
+    public function TermCondition()
+    {
+        return $this->render('registration/terms_conditions.html.twig');
+    }
 }

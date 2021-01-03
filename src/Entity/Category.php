@@ -21,7 +21,7 @@ class Category
     /**
      * @ORM\Column(type="string", length=28)
      * @Assert\Length(
-     *      max = 28,
+     *      max = 21,
      *      maxMessage = "Your category name cannot be longer thant {{ limit }} caracters"
      * )
      */

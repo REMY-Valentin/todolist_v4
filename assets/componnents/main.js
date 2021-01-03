@@ -138,7 +138,7 @@ class Main extends React.Component {
                     <form onSubmit={this.add}>
                         <div className="task__content">
                         <div className="task__content__name">
-                            <input className="input" type="text" placeholder="Nom de la tâche" name="name" onChange={this.handleName} />
+                            <input maxLength="50" className="input" type="text" placeholder="Nom de la tâche" name="name" onChange={this.handleName} />
                         </div>
                         <div className="task__content__category">
                             <div className="select is-small">

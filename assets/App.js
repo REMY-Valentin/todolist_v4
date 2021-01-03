@@ -133,7 +133,7 @@ class App extends React.Component {
         <div className="addCategory">
           <form onSubmit={this.addCategory} name="addCategory">
             <div className="addCategory--input">
-              <input type="text" className="input" name="category" placeholder="Catégorie"/>
+              <input type="text" maxLength="21" className="input" name="category" placeholder="Catégorie"/>
               { this.state.error ? <span className="tag is-danger errors">Category too long !</span> : null}
             </div>
             <button className="task__content__button__add button is-info"><i className="fa fa-plus"></i>Ajouter</button>

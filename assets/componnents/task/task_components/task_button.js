@@ -32,7 +32,7 @@ class button extends React.Component {
             id: this.state.id,
         })
         .then((res) => {
-            console.log(res)
+            //console.log(res)
             this.dispacher("delete", this.state.id)
         })
         .catch((err) => {
